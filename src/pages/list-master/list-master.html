@@ -36,6 +36,35 @@
 
   </ion-list-->
 
+  <!--div class="pins">
+    <div class="pin">
+      asdflasdfj asd dafdasd
+      asdflasdfj asd dafdasd
+      asdflasdfj asd dafdasd
+      asdflasdfj asd dafdasd
+      asdflasdfj asd dafdasd
+      asdflasdfj asd dafdasd
+      asdflasdfj asd dafdasd
+    </div>
+    <div class="pin">
+      asdflasdfj asd dafdasd
+    </div>
+    <div class="pin">
+      asdflasdfj asd dafdasd
+    </div>
+    <div class="pin">
+      asdflasdfj asd dafdasd
+    </div>
+    <div class="pin">
+      asdflasdfj asd dafdasd
+    </div>
+    <div class="pin">
+      asdflasdfj asd dafdasd
+    </div>
+    <div class="pin">
+      asdflasdfj asd dafdasd
+    </div>
+  </div-->
 
     <ion-card *ngFor="let special of currentSpecials" (click)="openItem(special)">
       <img *ngIf="special.imgur_url" [src]="special.imgur_url"/>
@@ -48,5 +77,7 @@
         </p>
       </ion-card-content>
     </ion-card>
+
+
 
 </ion-content>

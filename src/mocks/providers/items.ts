@@ -19,7 +19,7 @@ export class Items {
 
   constructor(private http: HttpClient) {
 
-    /*
+
     let items = [
       {
         "name": "Burt Bear",
@@ -57,8 +57,9 @@ export class Items {
         "about": "Paul is a Puppy."
       }
     ];
-    */
 
+
+    /*
 
     this.http.get("https://sheetdb.io/api/v1/5a8cb08f4ed27").subscribe(data =>{
 
@@ -68,6 +69,7 @@ export class Items {
       }
     );
 
+    */
 
 
 

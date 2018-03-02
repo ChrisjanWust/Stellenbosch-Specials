@@ -25,6 +25,9 @@ export class Specials {
 */
 
   constructor(private http: HttpClient) {
+    //try 5
+    let results;
+
     // try 4
 
 
@@ -71,8 +74,9 @@ export class Specials {
 
     this.http.get("https://sheetdb.io/api/v1/5a8cae0b9bf7f").subscribe(data =>{
 
+      results = data;
       //console.log("Received response from the server");
-      for (let special of data) {
+      for (let special of results) {
         this.specials.push(new Special(special));
       }
 
@@ -80,7 +84,7 @@ export class Specials {
       //console.log("Length of specials: " + this.specials.length);
 
       // once result received, update return list
-      this.updateReturnList();
+      //this.updateReturnList();
 
     });
 
@@ -96,9 +100,9 @@ export class Specials {
   query(params?: any) {
     console.log("Executing query - specials.ts");
     if (!params) {
-      console.log("Length of specials: " + this.specials.length);
+      console.log("Length of specials: " + this.specials.length + " - query");
       this.specialsReturnList = this.specials;
-      return this.specialsReturnList;
+      return this.specials;
     }
 
     if (params[0].equals("today")){
@@ -155,7 +159,7 @@ export class Specials {
 
   updateReturnList(){
     // bad quick & dirty
-    this.queryToday();
+    this.query();
   }
 
 
