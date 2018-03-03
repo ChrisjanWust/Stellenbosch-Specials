@@ -1,6 +1,8 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+
     <ion-title>Today's Specials</ion-title>
 
     <ion-buttons end>
@@ -66,8 +68,12 @@
     </div>
   </div-->
 
+
     <ion-card *ngFor="let special of currentSpecials" (click)="openItem(special)">
-      <img *ngIf="special.imgur_url" [src]="special.imgur_url"/>
+      <div *ngIf="special.imgur_url" class="img-overflow-hider">
+        <img [src]="special.imgur_url"/>
+        <div class="overlay"></div>
+      </div>
       <ion-card-content>
         <ion-card-title>
           <span *ngIf="special.discount_type">{{special.discount_type}} </span>{{special.food_type}} at {{special.venue}}

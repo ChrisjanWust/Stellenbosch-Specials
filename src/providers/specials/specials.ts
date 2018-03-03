@@ -10,7 +10,10 @@ import {Observable} from 'rxjs/Observable';
 export class Specials {
   specials: Special[] = [];
   specialsReturnList : Special [] = [];
-  result:Array<Object>; // try3
+
+  current_day: number;
+  current_hour: number;
+  current_minute: number;
 
   // try 5
 
@@ -27,6 +30,7 @@ export class Specials {
   constructor(private http: HttpClient) {
     //try 5
     let results;
+
 
     // try 4
 
@@ -84,7 +88,7 @@ export class Specials {
       //console.log("Length of specials: " + this.specials.length);
 
       // once result received, update return list
-      //this.updateReturnList();
+      this.updateReturnList();
 
     });
 
@@ -102,7 +106,7 @@ export class Specials {
     if (!params) {
       console.log("Length of specials: " + this.specials.length + " - query");
       this.specialsReturnList = this.specials;
-      return this.specials;
+      return this.specialsReturnList;
     }
 
     if (params[0].equals("today")){
@@ -131,9 +135,9 @@ export class Specials {
 
     // get time : use to check if special is currently available
     let date = new Date();
-    let day = date.getDay(); // returns day as a number
-    let hour = date.getHours();
-    let minute = date.getMinutes();
+    this.current_day = date.getDay(); // returns day as a number
+    this.current_hour = date.getHours();
+    this.current_minute = date.getMinutes();
 
     // check all specials
 
@@ -141,9 +145,11 @@ export class Specials {
 
     for (let special of this.specials) {
 
-      console.log(special.day_num + " VS " + day);
+      //console.log(special.day_num + " VS " + day);
+      //console.log(special.time_end + " VS " + hour + ":" + minute + " TYPE: " + (typeof special.day_num));
 
-      if (special.day_num == day || (special.day_num <= day && special.day_end_num >= day)){
+//      if ((special.day_num == day || (special.day_num <= day && special.day_end_num >= day)) && true){
+      if (this.check_if_available(special.day_num, special.day_end_num, special.time_start, special.time_end)){
         this.specialsReturnList.push(new Special(special));
       }
     }
@@ -153,13 +159,19 @@ export class Specials {
 
     // return new list
     return this.specialsReturnList;
-
-
   }
 
   updateReturnList(){
     // bad quick & dirty
-    this.query();
+    this.queryToday();
+  }
+
+  check_if_available(special_day_num: number, special_day_end_num: number, special_time_start: string, special_time_end: string){
+    // first check if day is valid before spending time converting strings to ints
+    if (special_day_num <= this.current_day && special_day_end_num >= this.current_day){
+      return true;
+    }
+    return false;
   }
 
 

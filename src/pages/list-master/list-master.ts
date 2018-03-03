@@ -18,7 +18,7 @@ export class ListMasterPage {
 
   constructor(public navCtrl: NavController, public items: Items, public specials: Specials, public modalCtrl: ModalController) {
     this.currentItems = this.items.query();
-    this.currentSpecials = this.specials.query();
+    this.currentSpecials = this.specials.queryToday();
 
   }
 
@@ -55,6 +55,12 @@ export class ListMasterPage {
   openItem(item: Item) {
     this.navCtrl.push('ItemDetailPage', {
       item: item
+    });
+  }
+
+  openSpecial(special: Special) {
+    this.navCtrl.push('ItemDetailPage', {
+      special: special
     });
   }
 }

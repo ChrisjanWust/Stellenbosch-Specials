@@ -11,15 +11,16 @@ import { Settings } from '../providers/providers';
   template: `<ion-menu [content]="content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Pages</ion-title>
+        <ion-title>Filter</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
       <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <!--button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
           {{p.title}}
-        </button>
+        </button-->
+        
       </ion-list>
     </ion-content>
 
