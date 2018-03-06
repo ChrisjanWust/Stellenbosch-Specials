@@ -18,7 +18,7 @@ export class ListMasterPage {
 
   constructor(public navCtrl: NavController, public items: Items, public specials: Specials, public modalCtrl: ModalController) {
     this.currentItems = this.items.query();
-    this.currentSpecials = this.specials.queryToday();
+    this.currentSpecials = this.specials.queryDay();
 
   }
 

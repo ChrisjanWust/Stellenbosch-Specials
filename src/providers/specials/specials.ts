@@ -104,6 +104,8 @@ export class Specials {
     console.log("Executing query - specials.ts");
     if (!params) {
       console.log("Length of specials: " + this.specials.length + " - query");
+
+      // should probably for loop through specials and push to specialsReturnList to keep pointer the same
       this.specialsReturnList = this.specials;
       return this.specialsReturnList;
     }
@@ -126,9 +128,7 @@ export class Specials {
   }
 
 
-  queryToday(){
-    console.log("Does this execute? - queryToday");
-
+  queryDay(day_num : number = this.current_day){
     // clear temp list
     this.specialsReturnList.length = 0;
 
@@ -138,35 +138,19 @@ export class Specials {
     this.current_day = date.getDay(); // returns day as a number (0-6)
     this.current_total_minutes = date.getHours() * 60 + date.getMinutes(); // return total number of minutes elapsed today
 
-    // developing
-    //this.current_day = 1;
-    //this.current_total_minutes = 12*60 + 12; // only in developing mode
-
-    // check all specials
-
-    console.log("Length of specials: " + this.specials.length);
-
     for (let special of this.specials) {
-
-      //console.log(special.day_num + " VS " + day);
-      //console.log(special.time_end + " VS " + hour + ":" + minute + " TYPE: " + (typeof special.day_num));
-
 //      if ((special.day_num == day || (special.day_num <= day && special.day_end_num >= day)) && true){
-      if (this.if_available_today(special.day_num, special.day_end_num, special.time_start, special.time_end) != null){
+      if (this.if_available_day(day_num, special.day_num, special.day_end_num, special.time_start, special.time_end) != null){
         this.specialsReturnList.push(new Special(special));
       }
     }
 
-    // debugging
-    console.log("Return list:\n" + this.specialsReturnList);
-
-    // return new list
     return this.specialsReturnList;
   }
 
   updateReturnList(){
     // bad quick & dirty
-    this.queryToday();
+    this.queryDay(this.current_day);
   }
 
   time_left(special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
@@ -188,6 +172,17 @@ export class Specials {
     let time_left = null;
 
     if (parseInt(special_day_num) <= this.current_day && (parseInt(special_day_end_num) >= this.current_day || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
+      // test if within time
+      time_left = 1;
+    }
+
+    return time_left;
+  }
+
+  if_available_day(day_num: number, special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
+    let time_left = null;
+
+    if (parseInt(special_day_num) <= day_num && (parseInt(special_day_end_num) >= day_num || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
       // test if within time
       time_left = 1;
     }
