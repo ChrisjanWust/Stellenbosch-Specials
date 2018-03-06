@@ -76,11 +76,8 @@
       </div>
       <ion-card-content>
         <ion-card-title>
-          <span *ngIf="special.discount_type">{{special.discount_type}} </span>{{special.food_type}} at {{special.venue}}
+          {{special.discount_type ? special.discount_type : special.price}} {{special.food_type}} at {{special.venue}}
         </ion-card-title>
-        <p>
-          {{special.description}}
-        </p>
       </ion-card-content>
     </ion-card>
 

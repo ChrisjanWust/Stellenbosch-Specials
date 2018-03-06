@@ -12,8 +12,7 @@ export class Specials {
   specialsReturnList : Special [] = [];
 
   current_day: number;
-  current_hour: number;
-  current_minute: number;
+  current_total_minutes: number;
 
   // try 5
 
@@ -135,9 +134,13 @@ export class Specials {
 
     // get time : use to check if special is currently available
     let date = new Date();
-    this.current_day = date.getDay(); // returns day as a number
-    this.current_hour = date.getHours();
-    this.current_minute = date.getMinutes();
+    console.log("Does this execute? " + date.getDay())
+    this.current_day = date.getDay(); // returns day as a number (0-6)
+    this.current_total_minutes = date.getHours() * 60 + date.getMinutes(); // return total number of minutes elapsed today
+
+    // developing
+    //this.current_day = 1;
+    //this.current_total_minutes = 12*60 + 12; // only in developing mode
 
     // check all specials
 
@@ -149,7 +152,7 @@ export class Specials {
       //console.log(special.time_end + " VS " + hour + ":" + minute + " TYPE: " + (typeof special.day_num));
 
 //      if ((special.day_num == day || (special.day_num <= day && special.day_end_num >= day)) && true){
-      if (this.check_if_available(special.day_num, special.day_end_num, special.time_start, special.time_end)){
+      if (this.if_available_today(special.day_num, special.day_end_num, special.time_start, special.time_end) != null){
         this.specialsReturnList.push(new Special(special));
       }
     }
@@ -166,12 +169,45 @@ export class Specials {
     this.queryToday();
   }
 
-  check_if_available(special_day_num: number, special_day_end_num: number, special_time_start: string, special_time_end: string){
-    // first check if day is valid before spending time converting strings to ints
-    if (special_day_num <= this.current_day && special_day_end_num >= this.current_day){
-      return true;
+  time_left(special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
+    let time_left = null;
+
+    if (parseInt(special_day_num) <= this.current_day && (parseInt(special_day_end_num) >= this.current_day || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
+      // test if within time
+      console.log(this.totalMinutes(special_time_start) + " VS "  + this.current_total_minutes);
+      if (this.totalMinutes(special_time_start) <= this.current_total_minutes){
+        time_left = this.totalMinutes(special_time_end) - this.current_total_minutes;
+      }
     }
-    return false;
+
+    return time_left;
+  }
+
+  // deprecating, only used while times are not available
+  if_available_today(special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
+    let time_left = null;
+
+    if (parseInt(special_day_num) <= this.current_day && (parseInt(special_day_end_num) >= this.current_day || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
+      // test if within time
+      time_left = 1;
+    }
+
+    return time_left;
+  }
+
+  // return total minutes elapsed in day from string in the following format "11:30"
+  totalMinutes(time_in: string){
+    // avoid crashing on too short input string
+
+    console.log(time_in);
+    try{
+      //let totalMinutesReturn = parseInt(time_in.substr(0,2)) * 60 + parseInt(time_in.substr(2,2));
+      //console.log("Hour: " + parseInt(time_in.substr(0,2)) + "\tMin: " + parseInt(time_in.substr(2,2)));
+      return (parseInt(time_in.substr(0,2)) * 60 + parseInt(time_in.substr(3,2)));
+    }catch (e){
+      console.log (e)
+    }
+
   }
 
 

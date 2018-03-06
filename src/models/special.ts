@@ -20,9 +20,9 @@ export interface Special {
 export class Special {
   venue: string;
   day: string;
-  day_num: number;
+  day_num: string;
   day_end: string;
-  day_end_num: number;
+  day_end_num: string;
   time_start: string;
   time_end: string;
   food_type: string;

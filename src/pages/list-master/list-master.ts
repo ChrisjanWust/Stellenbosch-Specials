@@ -52,9 +52,9 @@ export class ListMasterPage {
   /**
    * Navigate to the detail page for this item.
    */
-  openItem(item: Item) {
+  openItem(special: Special) {
     this.navCtrl.push('ItemDetailPage', {
-      item: item
+      special: special
     });
   }
 
