@@ -15,11 +15,16 @@ import { Specials } from '../../providers/providers';
 export class ListMasterPage {
   currentItems: Item[];
   currentSpecials: Special[];
+  //current_day: number;
 
   constructor(public navCtrl: NavController, public items: Items, public specials: Specials, public modalCtrl: ModalController) {
-    this.currentItems = this.items.query();
+    this.currentItems = this.items.query(); // marked for deletion
     this.currentSpecials = this.specials.queryDay();
 
+    // get day of the week and update ion-select in filter menu
+    // doesn't seem to be supported by ionid!!
+    //this.current_day = new Date().getDay(); // returns day as a number (0-6)
+    //this.daySelectValue = "" + this.current_day;
   }
 
   /**
@@ -62,5 +67,10 @@ export class ListMasterPage {
     this.navCtrl.push('ItemDetailPage', {
       special: special
     });
+  }
+
+  selectedDayChanged(new_day: string){
+    console.log("Day changed to " + typeof new_day + " : " + new_day);
+    this.currentSpecials = this.specials.queryDay(parseInt(new_day));
   }
 }

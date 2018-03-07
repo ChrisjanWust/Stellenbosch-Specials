@@ -1,20 +1,59 @@
+
+
+
 <ion-header>
 
   <ion-navbar>
-    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <button ion-button menuToggle="left"><ion-icon name="menu"></ion-icon></button>
 
-    <ion-title>Today's Specials</ion-title>
+    <ion-title>Specials</ion-title>
 
-    <ion-buttons end>
+    <!--ion-buttons end>
       <button ion-button icon-only (click)="addItem()">
         <ion-icon name="add"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons-->
+
+
+    <button end ion-button menuToggle="right" ><ion-icon name="options"></ion-icon></button>
+
+
+
   </ion-navbar>
 
 </ion-header>
 
-<ion-content>
+
+
+<!-- RIGHT SIDE FILTER MENU -->
+<ion-menu [content]="content" side="right" id="menu2">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Filter</ion-title>
+      <button end ion-button menuToggle="right" ><ion-icon name="close"></ion-icon></button>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label>Day</ion-label>
+        <ion-select #daySelect (ionChange)="selectedDayChanged(daySelect.value)">
+          <ion-option value="1">Monday</ion-option>
+          <ion-option value="2">Tuesday</ion-option>
+          <ion-option value="3">Wednesday</ion-option>
+          <ion-option value="4">Thursday</ion-option>
+          <ion-option value="5">Friday</ion-option>
+          <ion-option value="6">Saturday</ion-option>
+          <ion-option value="0">Sunday</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content #content>
 
 
   <!--ion-list>

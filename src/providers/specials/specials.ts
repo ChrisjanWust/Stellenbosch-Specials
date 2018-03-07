@@ -134,7 +134,6 @@ export class Specials {
 
     // get time : use to check if special is currently available
     let date = new Date();
-    console.log("Does this execute? " + date.getDay())
     this.current_day = date.getDay(); // returns day as a number (0-6)
     this.current_total_minutes = date.getHours() * 60 + date.getMinutes(); // return total number of minutes elapsed today
 
