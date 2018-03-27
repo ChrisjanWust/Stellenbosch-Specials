@@ -53,7 +53,10 @@
   </ion-content>
 </ion-menu>
 
-<ion-content #content>
+
+
+<ion-content #content class="bg-light">
+
 
 
   <!--ion-list>
@@ -108,17 +111,53 @@
   </div-->
 
 
-    <ion-card *ngFor="let special of currentSpecials" (click)="openItem(special)">
+    <ion-card *ngFor="let special of currentSpecials" (click)="openItem(special)" style="position:relative;">
+
+      <!-- todo: round edges. maybe define a polygon -->
+      <div *ngIf="special.price" class="price-tag">
+        <div class="price-tag-triangle"></div>
+        <div class="price-tag-circle"></div>
+        R {{special.price}}{{special.price_max ? '+' : ''}}
+      </div>
+
       <div *ngIf="special.imgur_url" class="img-overflow-hider">
         <img [src]="special.imgur_url"/>
         <div class="overlay"></div>
       </div>
-      <ion-card-content>
-        <ion-card-title>
-          {{special.discount_type ? special.discount_type : special.price}} {{special.food_type}} at {{special.venue}}
-        </ion-card-title>
+
+      <ion-card-content *ngIf="special.price && !special.imgur_url; else else_ion_card" style="padding-right: 65px;">
+          {{special.discount_type ?
+            special.discount_type + ' ' + special.food_description.toLowerCase() :
+             special.food_description }}
+          at {{special.venue}}
       </ion-card-content>
+
+      <ng-template #else_ion_card>
+        <ion-card-content>
+          {{special.discount_type ?
+          special.discount_type + ' ' + special.food_description.toLowerCase() :
+          special.food_description }}
+          at {{special.venue}}
+        </ion-card-content>
+      </ng-template>
+
+
     </ion-card>
+
+  <!-- quick & dirty -->
+  <ng-container *ngIf="currentSpecials.length == 0">
+    <ion-card>
+
+      <ion-card-header class="center-text">
+        <ion-spinner></ion-spinner>
+        <br>
+        Fetching Specials
+      </ion-card-header>
+
+
+    </ion-card>
+  </ng-container>
+
 
 
 

@@ -59,3 +59,44 @@ page-list-master {
   }
 }
 
+$price-tag-height: 28px;
+.price-tag {
+  right: 0;
+  z-index: 1;
+  display: inline-block;
+  background-color: $price-color;
+  color: map_get($colors, light);
+  // font-weight: bold; // need to include font in assets?
+  letter-spacing: -0.5px;
+  padding: 5px 7px 5px 5px;
+  margin-top: 5px;
+  position: absolute;
+  height: $price-tag-height;
+
+  .price-tag-triangle{
+    position: absolute;
+    left: - $price-tag-height / 2;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: $price-tag-height / 2 solid transparent;
+    border-right: $price-tag-height / 2  solid $price-color;
+    border-bottom: $price-tag-height / 2  solid transparent;
+  }
+
+  .price-tag-circle{
+    position: absolute;
+    left:  - $price-tag-height / 4;
+    top: $price-tag-height / 2 - 2px;
+    height: 4px;
+    width: 4px;
+    background-color: $background-color;
+    border-radius: 50%;
+  }
+}
+
+.wrap-tag{
+
+}
+
+

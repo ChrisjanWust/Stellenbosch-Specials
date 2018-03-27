@@ -10,5 +10,11 @@ page-item-detail {
     width: 100%;
     background: white;
     position: absolute;
+
+    ion-list{
+      margin-bottom: 0;
+    }
   }
+
+
 }

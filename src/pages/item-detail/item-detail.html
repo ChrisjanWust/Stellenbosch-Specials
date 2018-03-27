@@ -1,20 +1,53 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ special.food_type }} at {{special.venue}}</ion-title>
+
+    <ion-title>{{special.venue}} {{special.food_type}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <img [src]="special.imgur_url">
 
-  <div class="item-detail" padding>
-    <p *ngIf="special.food_description">{{special.food_description}}</p>
-    <p *ngIf="special.price">{{special.price}}+</p>
-    <p *ngIf="special.time_start">{{special.time_start}} till {{ special.time_end}} </p>
-    <p *ngIf="special.students_only">STUDENTS ONLY</p>
+  <div class="item-detail">
+
+
+    <ion-list>
+
+      <ion-item *ngIf="special.food_description">
+        <ion-icon name="information-circle" item-start></ion-icon>
+        {{special.food_description}}
+      </ion-item>
+
+      <ion-item *ngIf="special.price">
+        <ion-icon name="pricetag" item-start></ion-icon>
+        R{{special.price}}{{special.price_max ? ' - ' + special.price_max : ''}}
+      </ion-item>
+
+      <ion-item *ngIf="special.time_start_hour">
+        <ion-icon name="time" item-start></ion-icon>
+        {{special.time_start_hour + 'h'}}{{special.time_start_minute ? special.time_start_minute : ''}}
+        till
+        {{special.time_end_hour + 'h'}}{{special.time_end_minute ? special.time_end_minute : ''}}
+      </ion-item>
+
+      <ion-item *ngIf="special.day_num != special.day_end_num">
+        <ion-icon name="calendar" item-start></ion-icon>
+        {{this.convertToDay(special.day_num)}}
+        till
+        {{this.convertToDay(special.day_end_num)}}
+      </ion-item>
+
+      <ion-item *ngIf="special.students_only">
+        <ion-icon name="card" item-start></ion-icon>
+        STUDENTS ONLY
+      </ion-item>
+
+    </ion-list>
+    <img *ngIf="special.imgur_url" [src]="special.imgur_url">
 
   </div>
+
+
 </ion-content>

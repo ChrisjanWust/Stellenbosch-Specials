@@ -75,23 +75,32 @@ export class Specials {
     /**/
     // try 1
 
-    this.http.get("https://sheetdb.io/api/v1/5a8cae0b9bf7f").subscribe(data =>{
+    this.http.get("https://script.googleusercontent.com/macros/echo?user_content_key=UERskx7-iwDhnDNuTq8-Ro0YkDpovyO65nNjC6Itc9WB7v1Jw6LPMxkTGqkfyxV74vseQn4kDzcAjQESxhT8OmOTaV7YRNt3OJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa5V7SzAZj2xBfFDRtNxpfsmuqfjnOYLBpWrI3G8IWJh29l4LSossvEa_fiNHZ0znxEBErwHi9mmizD2yLEI6hMgowX7VHBbY3ueWB-hBmNQUaUrheRB6cHFf3Qh7U9j_-VvdsqYhfGkQQ3wbFDNRb7QmlNN8bOQSLzbuyV5WyKSa&lib=M7OO09pfGNQD9igEAo4bouJoiE_6Oxspk").subscribe(data =>{
 
-      results = data;
-      //console.log("Received response from the server");
-      for (let special of results) {
-        this.specials.push(new Special(special));
-      }
+      //this.http.get("https://sheetdb.io/api/v1/5a8cae0b9bf7f").subscribe(data =>{
 
-      //console.log(this.specials);
-      //console.log("Length of specials: " + this.specials.length);
 
-      // once result received, update return list
-      this.updateReturnList();
+        //console.log(data);
 
-    });
+        let results: any = data; // moet seker eintlik regte tiepe define
 
-  }
+        for (let special of results.records) {
+          special.price = Math.round(special.price);
+          this.specials.push(new Special(special));
+        }
+
+        //console.log(this.specials);
+        //console.log("Length of specials: " + this.specials.length);
+
+        // once result received, update return list
+        this.updateReturnList();
+
+      });
+    }
+
+
+
+  /*
 
   add(newSpecial: Special) {
 
@@ -99,6 +108,8 @@ export class Specials {
 
   edit(oldSpecial: Special, newSpecial: Special) {
   }
+
+  */
 
   query(params?: any) {
     console.log("Executing query - specials.ts");
@@ -178,7 +189,20 @@ export class Specials {
     return time_left;
   }
 
-  if_available_day(day_num: number, special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
+  /* updating to numeric values
+  if_available_day(day_num: string, special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
+    let time_left = null;
+
+    if (parseInt(special_day_num) <= day_num && (parseInt(special_day_end_num) >= day_num || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
+      // test if within time
+      time_left = 1;
+    }
+
+    return time_left;
+  }
+  */
+
+  if_available_day(day_num, special_day_num, special_day_end_num, special_time_start, special_time_end) {
     let time_left = null;
 
     if (parseInt(special_day_num) <= day_num && (parseInt(special_day_end_num) >= day_num || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
