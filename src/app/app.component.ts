@@ -32,9 +32,8 @@ export class MyApp {
 */
 
   pages: any[] = [
-    { title: 'Home', icon: 'home', component: 'ListMasterPage' },
-    { title: 'Dev Notes', icon: 'mail', component: 'DevNotesPage' },
-    { title: 'Settings', icon: 'settings', component: 'SettingsPage' },
+    { title: 'Specials', icon: 'home', component: 'ListMasterPage' },
+    { title: 'From the developer', icon: 'mail', component: 'DevNotesPage' },
   ]
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {

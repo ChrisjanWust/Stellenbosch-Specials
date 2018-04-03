@@ -6,7 +6,7 @@
   <ion-navbar>
     <button ion-button menuToggle="left"><ion-icon name="menu"></ion-icon></button>
 
-    <ion-title>Specials</ion-title>
+    <ion-title id="pageTitle">Today's Specials</ion-title>
 
     <!--ion-buttons end>
       <button ion-button icon-only (click)="addItem()">
@@ -58,60 +58,7 @@
 <ion-content #content class="bg-light">
 
 
-
-  <!--ion-list>
-    <ion-item-sliding *ngFor="let item of currentItems">
-      <button ion-item (click)="openItem(item)">
-        <ion-avatar item-start>
-          <img [src]="item.profilePic" />
-        </ion-avatar>
-        <h2 *ngIf="item.name != null">{{item.name}}</h2>
-        <p>{{item.about}}</p>
-
-        <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
-      </button>
-
-      <ion-item-options>
-        <button ion-button color="danger" (click)="deleteItem(item)">
-          {{ 'DELETE_BUTTON' | translate }}
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-
-  </ion-list-->
-
-  <!--div class="pins">
-    <div class="pin">
-      asdflasdfj asd dafdasd
-      asdflasdfj asd dafdasd
-      asdflasdfj asd dafdasd
-      asdflasdfj asd dafdasd
-      asdflasdfj asd dafdasd
-      asdflasdfj asd dafdasd
-      asdflasdfj asd dafdasd
-    </div>
-    <div class="pin">
-      asdflasdfj asd dafdasd
-    </div>
-    <div class="pin">
-      asdflasdfj asd dafdasd
-    </div>
-    <div class="pin">
-      asdflasdfj asd dafdasd
-    </div>
-    <div class="pin">
-      asdflasdfj asd dafdasd
-    </div>
-    <div class="pin">
-      asdflasdfj asd dafdasd
-    </div>
-    <div class="pin">
-      asdflasdfj asd dafdasd
-    </div>
-  </div-->
-
-
-    <ion-card *ngFor="let special of currentSpecials" (click)="openItem(special)" style="position:relative;">
+    <ion-card *ngFor="let special of currentSpecials" (click)="openSpecial(special)" style="position:relative;">
 
       <!-- todo: round edges. maybe define a polygon -->
       <div *ngIf="special.price" class="price-tag">

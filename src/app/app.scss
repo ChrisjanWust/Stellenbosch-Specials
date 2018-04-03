@@ -41,3 +41,16 @@ ion-card{
 .bg-light{
   background-color: map-get($colors, light);
 }
+
+// remove scrollbar from side nav when unrequired
+.scroll-content{
+  overflow-y: auto;
+}
+
+#main-menu .item-inner{
+  margin-left: 10px !important;
+}
+
+.alert-md .alert-radio-group, .alert-md .alert-checkbox-group {
+  max-height: 75vh;
+}

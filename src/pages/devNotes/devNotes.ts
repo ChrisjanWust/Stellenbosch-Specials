@@ -14,9 +14,12 @@ export class DevNotesPage {
     this.devNotes.getLatestDevNote().then(data => {
       const data2 : any = data;
       data = null;
-      document.getElementById("devNotesHere").innerText = data2.text;
-    })
+      document.getElementById("devNoteText").innerHTML = data2.text_full;
+      document.getElementById("devNoteTitle").innerHTML = data2.title;
 
+    });
+
+    this.devNotes.justBeenRead(); // might be required in very obscure scenarios
   }
 
 }

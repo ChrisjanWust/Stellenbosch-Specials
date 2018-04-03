@@ -16,8 +16,13 @@
     <ion-list>
 
       <ion-item *ngIf="special.food_description">
-        <ion-icon name="information-circle" item-start></ion-icon>
+        <ion-icon name="restaurant" item-start></ion-icon>
         {{special.food_description}}
+      </ion-item>
+
+      <ion-item *ngIf="special.discount_type">
+        <ion-icon name="notifications" item-start></ion-icon>
+        {{special.discount_type}}
       </ion-item>
 
       <ion-item *ngIf="special.price">
@@ -45,7 +50,7 @@
       </ion-item>
 
     </ion-list>
-    <img *ngIf="special.imgur_url" [src]="special.imgur_url">
+    <img *ngIf="special.imgur_url" [src]="special.imgur_url" style="width:100%;">
 
   </div>
 
