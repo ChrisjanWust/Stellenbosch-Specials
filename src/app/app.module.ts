@@ -17,6 +17,7 @@ import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 
 // The translate loader needs to know where to load i18n files
@@ -69,6 +70,7 @@ export function provideSettings(storage: Storage) {
     Camera,
     SplashScreen,
     StatusBar,
+    SocialSharing,
     DevNotes,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
