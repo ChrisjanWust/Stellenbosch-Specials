@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-
 import { Special } from '../../models/special';
-//import { Api } from '../api/api';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Environment } from "../environment/environment";
 
 @Injectable()
 export class Specials {
@@ -14,78 +11,29 @@ export class Specials {
   current_day: number;
   current_total_minutes: number;
 
-  // try 5
 
+  constructor(private http: HttpClient, private environment : Environment) {
 
-  // try 4
-  /*
-  private data: Observable<Array<Special>>;
-  private values: Array<number> = [];
-  private anyErrors: boolean;
-  private finished: boolean;
-
-*/
-
-  constructor(private http: HttpClient) {
-    //try 5
-    let results;
-
-
-    // try 4
-
-
-
-    // try 3
-
-    /*
-    getHeroes (): Observable<Hero[]> {
-      return this.http.get<Hero[]>(this.heroesUrl)
-    }
-    */
-
-/*
-    console.log("Does this log");
-
-    let temp1: Observable<Special[]> = http.get<Object[]>("https://sheetdb.io/api/v1/5a8cae0b9bf7f").pipe(
-      tap(result => {
-        console.log("result found");
-        for (let special of result) {
-          console.log("Reading special from result");
-          this.specials.push(new Special(special));
-        }
-      })
-    );
-    */
-
-
-    // try 2
-    /*
-    http.get("https://sheetdb.io/api/v1/5a8cae0b9bf7f")
-      .subscribe(response => {
-        //this.result =data[0];
-
-        this.result = JSON.parse(response.statusText);
-
-        for (let special of this.result) {
-          this.specials.push(new Special(special));
-        }
-
-      });
-
-    /**/
-    // try 1
+    this.refreshTime();
 
     this.http.get("https://script.googleusercontent.com/macros/echo?user_content_key=UERskx7-iwDhnDNuTq8-Ro0YkDpovyO65nNjC6Itc9WB7v1Jw6LPMxkTGqkfyxV74vseQn4kDzcAjQESxhT8OmOTaV7YRNt3OJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa5V7SzAZj2xBfFDRtNxpfsmuqfjnOYLBpWrI3G8IWJh29l4LSossvEa_fiNHZ0znxEBErwHi9mmizD2yLEI6hMgowX7VHBbY3ueWB-hBmNQUaUrheRB6cHFf3Qh7U9j_-VvdsqYhfGkQQ3wbFDNRb7QmlNN8bOQSLzbuyV5WyKSa&lib=M7OO09pfGNQD9igEAo4bouJoiE_6Oxspk").subscribe(data =>{
 
-      //this.http.get("https://sheetdb.io/api/v1/5a8cae0b9bf7f").subscribe(data =>{
+        console.log(data);
+        console.log("Current total minutes: " + this.current_total_minutes);
 
-
-        //console.log(data);
 
         let results: any = data; // moet seker eintlik regte tiepe define
 
         for (let special of results.records) {
           special.price = Math.round(special.price);
+
+          if (special.minute_start != 0){
+            special.minutes_till_start = special.minute_start - this.current_total_minutes;
+          }
+          if (special.minute_end != 0) {
+            special.minutes_till_end = special.minute_end - this.current_total_minutes;
+          }
+
           this.specials.push(new Special(special));
         }
 
@@ -94,6 +42,8 @@ export class Specials {
 
         // once result received, update return list
         this.updateReturnList();
+
+        console.log(this.specials);
 
       });
     }
@@ -143,14 +93,10 @@ export class Specials {
     // clear temp list
     this.specialsReturnList.length = 0;
 
-    // get time : use to check if special is currently available
-    let date = new Date();
-    this.current_day = date.getDay(); // returns day as a number (0-6)
-    this.current_total_minutes = date.getHours() * 60 + date.getMinutes(); // return total number of minutes elapsed today
+    this.refreshTime();
 
     for (let special of this.specials) {
-//      if ((special.day_num == day || (special.day_num <= day && special.day_end_num >= day)) && true){
-      if (this.if_available_day(day_num, special.day_num, special.day_end_num, special.time_start, special.time_end) != null){
+      if (this.isOrBecomingAvailable(day_num, special.day_num, special.day_end_num, special.minutes_till_end)){
         this.specialsReturnList.push(new Special(special));
       }
     }
@@ -163,6 +109,7 @@ export class Specials {
     this.queryDay(this.current_day);
   }
 
+  /*
   time_left(special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
     let time_left = null;
 
@@ -176,57 +123,34 @@ export class Specials {
 
     return time_left;
   }
-
-  // deprecating, only used while times are not available
-  if_available_today(special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
-    let time_left = null;
-
-    if (parseInt(special_day_num) <= this.current_day && (parseInt(special_day_end_num) >= this.current_day || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
-      // test if within time
-      time_left = 1;
-    }
-
-    return time_left;
-  }
-
-  /* updating to numeric values
-  if_available_day(day_num: string, special_day_num: string, special_day_end_num: string, special_time_start: string, special_time_end: string) {
-    let time_left = null;
-
-    if (parseInt(special_day_num) <= day_num && (parseInt(special_day_end_num) >= day_num || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
-      // test if within time
-      time_left = 1;
-    }
-
-    return time_left;
-  }
   */
 
-  if_available_day(day_num, special_day_num, special_day_end_num, special_time_start, special_time_end) {
-    let time_left = null;
 
+  // currently not working
+  private isOrBecomingAvailable(day_num, special_day_num, special_day_end_num, special_minutes_till_end):boolean {
     if (parseInt(special_day_num) <= day_num && (parseInt(special_day_end_num) >= day_num || (parseInt(special_day_end_num) == 0 && parseInt(special_day_num) != 0))) {
-      // test if within time
-      time_left = 1;
-    }
+      // test if available at current time
 
-    return time_left;
+      if (special_minutes_till_end > 0 || special_minutes_till_end == null){
+        return true;
+      }else{
+        return false; // can be simplified
+      }
+
+    }else{
+      return false;
+    }
   }
 
-  // return total minutes elapsed in day from string in the following format "11:30"
-  totalMinutes(time_in: string){
-    // avoid crashing on too short input string
+  private refreshTime() {
+    // get time : use to check if special is currently available
+    let date = new Date();
+    this.current_day = date.getDay(); // returns day as a number (0-6)
+    this.current_total_minutes = date.getHours() * 60 + date.getMinutes(); // return total number of minutes elapsed today
 
-    console.log(time_in);
-    try{
-      //let totalMinutesReturn = parseInt(time_in.substr(0,2)) * 60 + parseInt(time_in.substr(2,2));
-      //console.log("Hour: " + parseInt(time_in.substr(0,2)) + "\tMin: " + parseInt(time_in.substr(2,2)));
-      return (parseInt(time_in.substr(0,2)) * 60 + parseInt(time_in.substr(3,2)));
-    }catch (e){
-      console.log (e)
+    if (this.environment.isDevEnvironment){
+      this.current_total_minutes = 950;
+      this.current_day = 2;
     }
-
   }
-
-
 }

@@ -34,11 +34,18 @@
         R{{special.price}}{{special.price_max ? ' - ' + special.price_max : ''}}
       </ion-item>
 
-      <ion-item *ngIf="special.time_start_hour">
+      <!-- deprecating -->
+      <!--ion-item *ngIf="special.time_start_hour || special.time_start_hour">
         <ion-icon name="time" item-start></ion-icon>
         {{special.time_start_hour + 'h'}}{{special.time_start_minute ? special.time_start_minute : ''}}
         till
         {{special.time_end_hour + 'h'}}{{special.time_end_minute ? special.time_end_minute : ''}}
+      </ion-item-->
+
+
+      <ion-item *ngIf="special.minute_start || special.minute_end">
+        <ion-icon name="time" item-start></ion-icon>
+        {{this.getTimeAsText(special.minute_start, special.minute_end)}}
       </ion-item>
 
       <ion-item *ngIf="special.day_num != special.day_end_num">
@@ -54,7 +61,7 @@
       </ion-item>
 
     </ion-list>
-    <img *ngIf="special.imgur_url" [src]="special.imgur_url" style="width:100%;">
+    <img *ngIf="special.img_url" [src]="special.img_url" style="width:100%;">
 
   </div>
 

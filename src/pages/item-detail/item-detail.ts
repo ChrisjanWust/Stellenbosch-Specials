@@ -44,16 +44,8 @@ export class ItemDetailPage {
       msg += '\nR' + this.special.price;
     }
 
-    if (this.special.time_start_hour){
-      msg += '\n' + this.special.time_start_hour + 'h';
-      if (this.special.time_start_minute){
-        msg += this.special.time_start_minute;
-      }
-      msg += ' till ' + this.special.time_end_hour + 'h';
-
-      if (this.special.time_end_minute){
-        msg+= this.special.time_end_minute;
-      }
+    if (this.special.minute_start || this.special.minute_end){ // dont think this if is required, but who cares
+      msg += '\n' + this.getTimeAsText(this.special.minute_start, this.special.minute_end);
     }
 
     if (this.special.day_num != this.special.day_end_num){
@@ -68,6 +60,31 @@ export class ItemDetailPage {
 
     console.log(msg);
     this.socialSharing.share(msg);
+  }
+
+  getTimeAsText(minute_start, minute_end) : string {
+    let returnText = '';
+    if (minute_start){
+      if (!minute_end){
+        returnText += 'From ';
+      }
+      returnText += Math.floor(minute_start / 60) + 'h';
+      if (minute_start%60 != 0){
+        returnText += minute_start%60;
+      }
+      returnText += ' till '
+
+    }
+    if (minute_end){
+      if (!minute_start) {
+        returnText += 'Till ';
+      }
+      returnText += Math.floor(minute_end / 60) + 'h';
+      if (minute_end%60 != 0){
+        returnText += minute_end%60;
+      }
+    }
+    return returnText;
   }
 
 }

@@ -15,6 +15,8 @@ import { Settings } from '../providers/providers';
 import { DevNotes } from '../providers/providers';
 import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
+import { Environment } from '../providers/providers';
+
 import { MyApp } from './app.component';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -72,6 +74,7 @@ export function provideSettings(storage: Storage) {
     StatusBar,
     SocialSharing,
     DevNotes,
+    Environment,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }

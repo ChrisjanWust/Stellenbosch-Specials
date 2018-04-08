@@ -67,12 +67,12 @@
         R {{special.price}}{{special.price_max ? '+' : ''}}
       </div>
 
-      <div *ngIf="special.imgur_url" class="img-overflow-hider">
-        <img [src]="special.imgur_url"/>
+      <div *ngIf="special.img_url" class="img-overflow-hider">
+        <img [src]="special.img_url"/>
         <div class="overlay"></div>
       </div>
 
-      <ion-card-content *ngIf="special.price && !special.imgur_url; else else_ion_card" style="padding-right: 65px;">
+      <ion-card-content *ngIf="special.price && !special.img_url; else else_ion_card" style="padding-right: 65px;">
           {{special.discount_type ?
             special.discount_type + ' ' + special.food_description.toLowerCase() :
              special.food_description }}

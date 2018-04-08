@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import {tryCatch} from "rxjs/util/tryCatch";
 
 /**
  * Controls user's reading of notes
